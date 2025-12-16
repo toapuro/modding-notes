@@ -40,7 +40,7 @@ class SomethingLogic {
     }
 }
 ```
-[^1]: 実際はonProcessのメソッド名などが異なる。
+[^1]: 実際はonProcessのメソッド名やアノテーションなどが異なる。
 
 ## Mixinセットアップ
 
@@ -67,7 +67,7 @@ apply plugin: 'org.spongepowered.mixin'
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "package": "$(groupId).mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [],
   "client": [],
@@ -77,7 +77,9 @@ apply plugin: 'org.spongepowered.mixin'
   }
 }
 ```
-`$(modid)`はModのIDに置き換えてください。
+`$(modid)`はModのIDに置き換え、
+`$(groupId)`は実際のグループIDに置き換えてください。
+
 
 次に、`build.gradle`の`minecraft {}`ブロックの下に以下を追加。
 ```gradle
