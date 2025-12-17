@@ -1,8 +1,15 @@
 site_name: Forge Modding Notes
-site_description: Modding Explained
+site_description: Forge Modding Explained
+site_author: toapuro
+site_url: https://toapuro.github.io/modding-notes/
+repo_name: toapuro/modding-notes
+repo_url: https://github.com/toapuro/modding-notes
+copyright: MIT License
 
 theme:
   name: material
+  icon:
+    repo: fontawesome/brands/github
   features:
     - content.code.copy
     - content.code.select
