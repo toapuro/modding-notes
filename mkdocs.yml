@@ -61,3 +61,6 @@ nav:
     - 環境構築: for-beginners/env-building.md
   - システム:
     - Mixin: system/mixin.md
+    - マッピング: system/mapping.md
+  - Java:
+    - Gradle: java/gradle.md

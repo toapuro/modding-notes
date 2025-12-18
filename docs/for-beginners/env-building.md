@@ -45,11 +45,11 @@
 
 いくつか方法があります
 
-Neoforgeであれば[1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod-ジェネレータの利用)を推奨
+Neoforgeであれば [1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod) を推奨
 
-Fabricであれば[1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod-ジェネレータの利用)を推奨
+Fabricであれば [1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod) を推奨
 
-Forgeであれば[4, (NeoForge/Forge/Fabric) Intellijプラグイン経由で生成](#4-neoforgeforgefabric-intellijプラグイン経由で生成)を推奨
+Forgeであれば [4, (NeoForge/Forge/Fabric) Intellijプラグイン経由で生成](#4-neoforgeforgefabric-intellij) を推奨
 
 ### 1, (NeoForge/Fabric) Mod ジェネレータの利用
 
@@ -85,7 +85,7 @@ Fabricならこちら
 プロジェクトを新規作成するとき左下にあるジェネレータから Minecraft を選択し、各項目を入力して作成を押してください。
 
 !!! note
-    JDKの指定が必要な場合は [Java JDK](#java-jdk)を参考にしてみてください。
+    JDKの指定が必要な場合は [Java JDK](#java-jdk) を参考にしてみてください。
 
 ## Java JDK
 
@@ -146,7 +146,7 @@ mod_authors=toapuro, another_author // 作者一覧
 mod_description=A example mod // Modの説明
 ```
 
-分からない用語は[#用語解説](#事前知識)を参照してください
+分からない用語は [#用語解説](#_2) を参照してください
 
 ## ビルド・実行の方法
 
