@@ -64,3 +64,4 @@ nav:
     - マッピング: system/mapping.md
   - Java:
     - Gradle: java/gradle.md
+    - 依存関係: java/dependency.md

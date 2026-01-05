@@ -28,8 +28,9 @@ minecraft {
 }
 ```
 ここは開発環境のマッピングを指定しています。
+[#マッピング](../system/mapping.md)で解説していますが、
 
-[#マッピング](../system/mapping.md)
+クラス名やメソッド名、フィールド名等を読みやすくするための物です。
 
 ```gradle title="build.gradle"
 minecraft {
@@ -69,24 +70,34 @@ minecraft {
     }
 }
 ```
-ここは開発環境の
 
+ここは開発環境の実行の設定について書いてある部分です。
 
-``` title="build.gradle"
+`client` なら `runClient` タスク、 `server` なら `runServer` タスクに対応します。他も同様です。
 
+```gardle title="build.gradle"
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+```
 
+datagen の generated リソースを追加。
+
+```gardle title="build.gradle"
 repositories {
-
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-
-
 }
+```
 
+依存関係を設定する部分です。
+
+`dependencies` に記述された依存関係は、`repositories`ブロックの中に記述されたレポジトリから参照してきます。
+
+詳しくは [#依存関係](dependency.md) を参照してください。
+
+
+```gradle title="build.gradle"
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
