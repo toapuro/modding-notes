@@ -55,6 +55,11 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.tilde
 
+plugins:
+  - search
+  - mkdocs-versioning:
+      version: 1.20.1
+
 nav:
   - ホーム: index.md
   - 初心者向け:
