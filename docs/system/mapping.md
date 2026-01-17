@@ -5,6 +5,8 @@
 
 [SpongePowered - MCP](https://docs.spongepowered.org/stable/en/plugin/internals/mcp.html)
 
+[マッピング - FabricMC](https://wiki.fabricmc.net/ja:tutorial:mappings)
+
 ## 難読化とマッピング
 Minecraft（Java版）のjarファイルは**難読化**されています。
 
@@ -12,14 +14,26 @@ Minecraft（Java版）のjarファイルは**難読化**されています。
 
 これらを開発者が理解できる名前に変換するための対応表を**マッピング**と呼びます。
 
+Forgeでは通常、実行時はSRGマッピングを使用します。
+
+しかし開発環境での実行の時のみ、その環境のマッピングを使用して起動されます。
+
+そのためMixinなどが開発環境と本番環境と動作が異なるということが発生する。
+
+そのため開発環境のみならず本番環境でもテストする必要があります。
+
+## SRG
+
+バージョン間で名前が変わってしまうため、共通化するのが目的の中間マッピングです。
+
+`m_286052_`や`f_90981_`等のように表記されます。
+
 ## マッピングの種類(Forge)
 
 ### MCP (Mod Coder Pack)
-古くから使われているコミュニティ主導のマッピングです。SRG名[^1]（中間名）を経由する仕組みが特徴です。
+古くから使われているコミュニティ主導のマッピングです。SRG名を経由する仕組みが特徴です。
 
 Forge等は内部処理でSRG名を使用しているため、エラーログ等で見かけることがあります。
-
-[^1]: `m_286052_`や`f_90981_`等の名前。
 
 ### Official Mappings (Mojang Mappings)
 Mojang公式のマッピングです。現在のMOD開発の主流ですが、引数名やローカル変数名までは復元されません。
@@ -29,7 +43,7 @@ Official Mappingsを拡張し、**引数名やローカル変数名を読みや�
 
 Official Mappingsと互換性があるため、開発の途中から導入しても基本的に問題ありません。
 
-## Parchmentの導入方法
+## Parchmentの導入方法(1.20.1)
 
 1. プロジェクト直下の `settings.gradle` に以下の maven リポジトリを追加します。
     ```diff title="settings.gradle"
@@ -66,3 +80,9 @@ minecraft {
 
 4. Gradleの更新
     設定を変更したら、Gradleプロジェクトをリフレッシュ、もしくは同期してください。IDE上で変更が反映されるはずです。
+
+## Parchmentの導入方法(Neoforge)
+
+以下を参照してください。
+
+https://docs.neoforged.net/toolchain/docs/parchment/
