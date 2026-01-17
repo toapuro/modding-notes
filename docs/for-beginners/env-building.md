@@ -6,8 +6,6 @@
     Eclipse IDE や VSCode でも開発できますが、この章では触れません。
 
 1. **Intellij IDEAのインストール**
-
-    個人利用なら **Ultimate** ではなく少し下にある {==**Community**==} を選んでください。
     
     [公式ダウンロードページ](https://www.jetbrains.com/ja-jp/idea/download/?section=windows)
 
