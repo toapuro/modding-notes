@@ -62,12 +62,12 @@ buildscript {
 apply plugin: 'org.spongepowered.mixin'
 ```
 
-以下を`src/main/resources/$(modid).mixins.json`に
-```json title="$(modid).mixins.json"
+以下を`src/main/resources/<modid>.mixins.json`に
+```json title="<modid>.mixins.json"
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "$(groupId).mixin",
+  "package": "<groupId>.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [],
   "client": [],
@@ -77,9 +77,7 @@ apply plugin: 'org.spongepowered.mixin'
   }
 }
 ```
-`$(modid)`はModのIDに置き換え、
-`$(groupId)`は実際のグループIDに置き換えてください。
-
+`<modid>`や`<groupID>`は適切なものに置き換えてください。
 
 次に、`build.gradle`の`minecraft {}`ブロックの下に以下を追加。
 ```gradle
