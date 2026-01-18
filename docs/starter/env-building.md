@@ -44,11 +44,11 @@
 
 いくつか方法があります
 
-NeoForgeであれば [1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod-ジェネレータの利用) を推奨
+NeoForgeであれば [1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod) を推奨
 
-Fabricであれば [1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod-ジェネレータの利用) を推奨
+Fabricであれば [1, (NeoForge/Fabric) Mod ジェネレータの利用](#1-neoforgefabric-mod) を推奨
 
-Forgeであれば [4, (NeoForge/Forge/Fabric) Intellijプラグイン経由で生成](#4-neoforgeforgefabric-intellijプラグイン経由で生成) を推奨
+Forgeであれば [4, (NeoForge/Forge/Fabric) Intellijプラグイン経由で生成](#4-neoforgeforgefabric-intellij) を推奨
 
 ### 1, (NeoForge/Fabric) Mod ジェネレータの利用
 
