@@ -160,15 +160,17 @@ public class ExampleMixin {
 
 `@At("HEAD")`のように使用します
 
-以下が主な値です。(value引数)
+以下がvalue引数の取りうる主な値です。
 
-- `HEAD`: メソッドの最初
-- `TAIL`: メソッドの最後の `return` の前
-- `RETURN`: `return` 文の前
-- `INVOKE`: 特定のメソッドを呼び出す前 (`target`引数必須)
-- `FIELD`: フィールドアクセス (`target`引数必須)
-- `STORE`: 変数代入 (`@ModifyVariable`のみ)
-- `LOAD`: 変数の取得 (`@ModifyVariable`のみ)
+| 値 | 説明 |
+| :--- | :--- |
+| `HEAD` | メソッドの最初 |
+| `TAIL` | メソッドの最後の `return` の前 |
+| `RETURN` | `return` 文の前 |
+| `INVOKE` | 特定のメソッドを呼び出す前 (`target`引数必須) |
+| `FIELD` | フィールドアクセス (`target`引数必須) |
+| `STORE` | 変数代入 (`@ModifyVariable`のみ) |
+| `LOAD` | 変数の取得 (`@ModifyVariable`のみ) |
 
 ### 引数(任意)
 
@@ -178,6 +180,10 @@ public class ExampleMixin {
 * `ordinal`: マッチした中で何番目の
 
 [^2]: FQCNは `パッケージ.クラス名` の形式でクラスを指定する。
+
+### 引数 `value`
+
+詳細な説明が必要なものを解説します。
 
 #### INVOKE
 
@@ -196,7 +202,7 @@ public class ExampleMixin {
 
     **デスクリプタで指定するパッケージは全て区切り文字が`.`ではなく`/`であることに注意**
 
-    #### クラスの指定
+    **クラスの指定**
 
     クラスは
     `Lパッケージ/クラス名;`
@@ -207,7 +213,7 @@ public class ExampleMixin {
 
     `Ljava/lang/Object;`
 
-    #### メソッドの指定
+    **メソッドの指定**
 
     ```java
     package io.github.toapuro.example;
