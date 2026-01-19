@@ -38,7 +38,7 @@ minecraft {
 }
 ```
 ここは開発環境のマッピングを指定しています。
-[#マッピング](../system/mapping.md)で解説していますが、
+[#マッピング](./mapping.md)で解説していますが、
 
 クラス名やメソッド名、フィールド名等を読みやすくするための物です。
 
@@ -113,7 +113,7 @@ dependencies {
 
 この例では Cursemaven をリポジトリとして登録し、JEI を依存関係として登録しています。
 
-詳しくは [#依存関係](dependency.md) を参照してください。
+詳しくは [#依存関係](../getting-started/dependency.md) を参照してください。
 
 以下他の設定
 ```gradle title="build.gradle"

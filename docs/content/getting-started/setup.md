@@ -154,7 +154,7 @@ mod_description=A example mod // Modの説明
 
 右側にある以下のような gradle アイコンを押すと、ビルドに関連する操作ができます。
 
-![](@assets/intellij/gradle.png)
+![](../../assets/intellij/gradle.png)
 
 `build.gradle`を変更した場合、サイドバーの左上にループするようなアイコンがあるので、それを押すと変更が適用されます。
 

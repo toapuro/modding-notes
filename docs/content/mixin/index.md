@@ -332,7 +332,7 @@ public class ExampleMixin {
 
 これは`@At`のtarget引数を指定する際にも気をつける必要があります。
 
-難読化については [#マッピング](mapping.md) で解説しています。
+難読化については [#マッピング](../advanced/mapping.md) で解説しています。
 
 **`require`**
 
