@@ -74,6 +74,9 @@ plugins:
   - search:
       lang: 'ja'
 
+hooks:
+  - hooks/check.py
+
 nav:
   - ホーム: index.md
   - 入門:
