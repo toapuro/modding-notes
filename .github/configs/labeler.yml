@@ -1,0 +1,15 @@
+# Directory Pattern
+github_action:
+  - changed-files:
+    - any-glob-to-any-file: '.github/**'
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: 'docs/**'
+
+# Branch Pattern
+fix:
+  - head-branch: ['^fix/']
+
+feature:
+  - head-branch: ['^feature/']
