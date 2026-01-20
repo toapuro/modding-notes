@@ -95,4 +95,8 @@ nav:
     - マッピング: content/advanced/mapping.md
     - Gradle: content/advanced/gradle.md
 
-  - Mixin: content/mixin/index.md
+  - Mixin:
+    - 基本: content/mixin/index.md
+    - インジェクション: content/mixin/injections.md
+    - MixinExtras: content/mixin/mixin-extras.md
+    - トリック: content/mixin/tricks.md
