@@ -1,5 +1,5 @@
 # Directory Pattern
-github_action:
+actions:
   - changed-files:
     - any-glob-to-any-file: '.github/**'
 
