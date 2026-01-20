@@ -59,7 +59,7 @@ dependencies {
 
 Modの起点となるメインクラスです。
 
-[#Modクラス](../component/mod.md) で詳しく解説しています。
+<!-- NOTE: Modクラス解説を追加 -->
 
 ## mods.toml
 
