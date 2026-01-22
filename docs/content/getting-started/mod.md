@@ -1,6 +1,14 @@
 # Modクラス
 
+## 資料
+
+- [Neoforge Wiki](https://docs.neoforged.net/docs/gettingstarted/modfiles#mod-entrypoints)
+- [Forge Wiki (Newer)](https://docs.minecraftforge.net/en/latest/gettingstarted/modfiles/#mod-entrypoints)
+- [Forge Wiki (Older)](https://docs.minecraftforge.net/en/1.20.1/gettingstarted/modfiles/)
+
 Modクラスは、基本的にModの起点となるクラスです。
+
+ここで何をするかというと、必要なデータの初期化や、レジストリの登録などを行います。
 
 === "Neoforge/Forge1.20.1(47.3.10以降)"
 
@@ -27,5 +35,9 @@ Modクラスは、基本的にModの起点となるクラスです。
             IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         }
     }
-    ```
+    
+!!! info
+
+    1.20.1以降で開発しているのであれば、基本的にコンストラクタに `FMLJavaModLoadingContext` を入れる書き方の方で大丈夫です。
+    元々Neoforgeの機能だったものがForge(47.3.10)で導入されています。
 
