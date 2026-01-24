@@ -35,6 +35,7 @@ Modクラスは、基本的にModの起点となるクラスです。
             IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         }
     }
+    ```
     
 !!! info
 
