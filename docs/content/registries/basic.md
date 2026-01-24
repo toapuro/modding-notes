@@ -96,7 +96,7 @@ public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_
 
 通常ではレジストリ登録では使用しないはずなので、スキップしてもらっても結構です。
 
-<!-- TODO: Forgeイベントの解説を書く -->
+<!-- NOTE: Forgeイベントの解説を書く -->
 
 ```java
 @SubscribeEvent // Modイベントバスで登録

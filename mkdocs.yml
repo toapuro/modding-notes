@@ -97,7 +97,7 @@ nav:
     - Gradle: content/advanced/gradle.md
 
   - レジストリ:
-    - 基本: content/component/registries.md
+    - 基本: content/registries/basic.md
 
   - Mixin:
     - 基本: content/mixin/index.md
