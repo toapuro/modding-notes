@@ -183,7 +183,7 @@ public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ExampleMod.MODID);
 
 public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_TABS.register("example", () -> CreativeModeTab.builder()
-  .title(Component.translatable("item_group." + ExampleMod.MOD_ID + ".example"))
+  .title(Component.translatable("item_group." + ExampleMod.MODID + ".example"))
   .icon(() -> new ItemStack(ModItems.EXAMPLE_ITEM.get()))
   .displayItems((params, output) -> {
     output.accept(ModItems.EXAMPLE_ITEM.get());
