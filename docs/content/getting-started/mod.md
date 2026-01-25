@@ -6,9 +6,7 @@
 - [Forge Wiki (Newer)](https://docs.minecraftforge.net/en/latest/gettingstarted/modfiles/#mod-entrypoints)
 - [Forge Wiki (Older)](https://docs.minecraftforge.net/en/1.20.1/gettingstarted/modfiles/)
 
-Modクラスは、基本的にModの起点となるクラスです。
-
-ここで何をするかというと、必要なデータの初期化や、レジストリの登録などを行います。
+Modクラスは、Modの起点となるクラスで、必要なデータの初期化やレジストリ登録を行います。
 
 === "Neoforge/Forge1.20.1(47.3.10以降)"
 
