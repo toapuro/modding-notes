@@ -193,6 +193,8 @@ public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_TABS.
 CREATIVE_TABS.register(modBus);
 ```
 
+<!-- NOTE: モデル、テクスチャの説明を追加したい -->
+
 ## リソースの追加(モデルやテクスチャ)
 
 アイテムを追加しただけでは、テクスチャやモデルが存在せず、`Missing Texture` が表示されます。
