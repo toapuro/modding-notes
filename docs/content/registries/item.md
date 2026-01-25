@@ -124,6 +124,12 @@ class ExampleItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         // ...
 
+        /*
+        InteractionResultHolder.success: アクション成功
+        InteractionResultHolder.consume: アクション処理済み
+        InteractionResultHolder.fail: アクション失敗 (次のuseコールバックに移る)
+        InteractionResultHolder.pass: 続行 (次のuseコールバックに移る)
+        */
         return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 
