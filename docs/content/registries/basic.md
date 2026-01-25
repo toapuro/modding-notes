@@ -11,7 +11,6 @@
 
 ```java title="ModItems.java"
 public class ModItems {
-    // DeferredRegisterを追加
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ExampleMod.MODID);
 
     // "example_item"というIDとして仮登録
@@ -49,9 +48,7 @@ public class ExampleMod {
 
 ### DeferredRegister
 
-`DeferredRegister` はレジストリの登録内容を保持して、適切なタイミングで登録する役割を果たします。
-
-この適切なタイミングというのは、`RegistryEvent` という、レジストリが初期化されるタイミングです。
+`DeferredRegister` はレジストリの登録内容を保持して、レジストリが初期化される `RegistryEvent` のタイミングで登録します。
 
 名前通り遅延して登録するものです。
 
@@ -94,9 +91,7 @@ public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_
 
 ### RegisterEvent
 
-通常ではレジストリ登録では使用しないはずなので、スキップしてもらっても結構です。
-
-<!-- NOTE: Forgeイベントの解説を書く -->
+RegisterEvent を使ってレジストリに登録することも可能ですが、通常はあまり使用されません。
 
 ```java
 @SubscribeEvent // Modイベントバスで登録
@@ -141,7 +136,7 @@ BuiltInRegistries.BLOCKS.containsKey(ResourceLocation.fromNamespaceAndPath("your
 
 !!! warning
 
-    レジストリ初期化後に実行してください。
+    必ずレジストリ初期化後に実行してください。
 
 レジストリに登録されたすべてのエントリに対して処理をすることもできます。
 
