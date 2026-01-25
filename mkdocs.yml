@@ -85,7 +85,7 @@ hooks:
   - hooks/check.py
 
 nav:
-  - ホーム: index.md
+  - ホーム: content/index.md
   - 入門:
     - 環境構築: content/getting-started/setup.md
     - 依存関係の追加: content/getting-started/dependency.md
