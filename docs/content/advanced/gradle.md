@@ -1,10 +1,10 @@
 # Gradle
 
-Gradle とは、Java ビルド用のツールです。
+Gradle とは、Javaビルドに使用されるツールです。
 
-そして初心者が真っ先に躓きやすい部分です。
+そして、そのGradleの設定ファイルを記述できるのがGroovy(もしくはKotlin DSL)です。
 
-しかしGradleもプログラミング言語であるので、一つ一つ見ていくとブラックボックスではなくどれも意味があることがわかります。
+Groovyもプログラミング言語であるので、一つ一つ見ていくとブラックボックスではなくどれも意味があることがわかります。
 
 1.20.1の Forge の [build.gradle](https://github.com/MinecraftForge/MinecraftForge/blob/1.20.1/mdk/build.gradle) を例に説明していきます。
 
