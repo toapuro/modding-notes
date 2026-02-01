@@ -100,8 +100,9 @@ nav:
     - Gradle: content/advanced/gradle.md
 
   - レンダリング:
+    - 基本: content/rendering/basic.md
     - 基本概念: content/rendering/concepts.md
-    - 主要クラス: content/rendering/classes.md
+    - RenderType: content/rendering/render-type.md
 
   - レジストリ:
     - レジストリについて: content/registries/basic.md

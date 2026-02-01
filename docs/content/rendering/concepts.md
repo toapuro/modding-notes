@@ -1,39 +1,6 @@
-# レンダリング (1.20.1)
+# 基本概念
 
-## 主要概念
-
-### Lwjgl
-
-MinecraftはLwjglというライブラリを経由してOpenGLで描画しています。
-
-基本的にはOpenGLのコマンドを直接叩くことは少なく、用意されたAPIを通して描画します。
-
-## 描画方法
-
-OpenGLにおいて、すべての物体は頂点の集まりによって構成されています。
-
-頂点は単なる「位置（X, Y, Z）」だけではなく、以下のような情報を持ったデータの塊です。
-
-- Position: 位置情報
-- Color: 色情報
-- UV: テクスチャ座標
-- Normal: 法線
-- Light: 光量
-
-## テクスチャアトラス
-
-OpenGLではテクスチャを切り替える（Bindする）処理は比較的重い処理です。
-そのため、Minecraftでは大量のブロックやアイテムのテクスチャを**1枚の巨大な画像**にまとめて扱うことで、描画時の切り替えコストを削減しています。これをテクスチャアトラスと呼びます。
-
-## Stitch
-
-- **Stitching (スティッチング)**: Moddingにおいては、個別のテクスチャファイルを用意すれば、ゲーム起動時に自動的にこの巨大な画像に「縫い合わせ（Stitch）」されます。
-- **UV座標**: 頂点データには「この巨大な画像のどこからどこまでを使うか」という0.0~1.0の座標(UV)を指定します。
-- **Missing Texture**: テクスチャが見つからない場合に表示される「紫と黒の市松模様」も、このアトラス内にデフォルトで含まれているスプライトの一つです。
-
-
-
-## 主要クラス
+## 座標変換と回転行列
 
 ### PoseStack
 
@@ -42,77 +9,104 @@ OpenGLではテクスチャを切り替える（Bindする）処理は比較的�
 これによってプレイヤーの手に持った剣だけを回転させる、といったことが可能になります。
 
 - `push`: 現在の状態(位置・回転)を保存する。ここから局所的な作業を始める合図。
-- `translate`: 座標を操作する。
-- `scale`: 座標を操作する。
-- `rotate`: 座標を操作する。
+- `translate`: 座標を移動する。
+- `scale`: 座標を拡大縮小する。
+- `rotate`: 座標を回転する。
 - `pop`: 保存した状態に戻す。作業終了。
 
 !!! warning
 
     `push` と `pop` は必ずセットで行ってください。
 
-### VertexConsumer & BufferBuilder
+### Quaternion
 
-3Dモデルは最終的に頂点の集合としてGPUに送られます。
+回転を表す数学的概念。
 
-Moddingでは直接OpenGLを叩くことは少なく、基本的な描画は `VertexConsumer` というインターフェースを通して頂点データを登録します。
+`Axis.YP.rotationDegrees(90)` のように軸を指定して回転を作成し、PoseStackに適用できます。
 
-- Position: 位置情報
-- Color: 色情報
-- UV: テクスチャ座標
-- Normal(法線): 光の当たり方等を計算するために必要
-- ライトマップ: 光のテクスチャ
-- オーバーレイテクスチャ: ダメージ表現やTNTの点滅等に使われるテクスチャのUVの指定
+## 描画バッファ
 
-### RenderType
+### MultiBufferSource(BufferSource)
 
-描画についての設定。
+結果的にバッチレンダリングされるように `VertexConsumer` を振り分けてくれるクラス。
 
-半透明処理や深度テストの挙動を決めます。
+`MultiBufferSource#getBuffer(RenderType)` で `VertexConsumer` を取得できます。
 
-#### RenderTypeの作成
+動作としては、
+異なる `RenderType` が渡された場合 `endBatch` され、描画される
+というもので、
 
-**RenderType.create**
+その `endBatch` が呼び出されるまで描画が行われません。
 
-- `VertexFormat`: 頂点フォーマット。大体 `DefaultVertexFormat` から指定
-- `VertexFormat.Mode`: 頂点モード
-- `bufferSize`: レンダリングバッファサイズ。頻度や内容によるが小規模なら256で十分
-- `RenderType.CompositeState`: `CompositeStateBuilder#createCompositeState` でビルドし渡す
+しかし、`GuiGraphics` 等は自動で `endBatch` を呼ぶため、手動で呼ぶ必要はありません。
 
-**CompositeStateBuilder**
+### VertexConsumer(BufferBuilder)
 
-`RenderType.CompositeState.builder()` で作成する。
+基本的な描画は `VertexConsumer` というインターフェースを通して頂点を登録します。
 
-- `setTextureState`: テクスチャアトラスの指定
-- `setShaderState`: シェーダーの指定
-- `setTransparencyState`: 半透明の処理方法の指定
-- `setDepthTestState`: 深度テストの指定
-- `setCullState`: カリングの指定
-- `setLightmapState`: ライトマップの指定
-- `setOverlayState`: オーバーレイの指定
-- `setLayeringState`: レイヤリングの指定
-- `setOutputState`: 出力先レンダーターゲットの指定
-- `setTexturingState`: テクスチャの準備の指定
-- `setWriteMaskState`: 書き込みマスクの指定
-- `setLineState`: 線の太さを指定
-- `setColorLogicState`: 色合成の方法を指定
-- `createCompositeState`: ビルドする
+頂点は以下の値を持ちます。
 
-バニラのRenderTypeの例
+`RenderType` によって必要な変数が異なります。
 
-```java
-// RenderType.SOLID
-private static final RenderType SOLID = RenderType.create(
-    "solid",
-    DefaultVertexFormat.BLOCK,
-    VertexFormat.Mode.QUADS,
-    2097152,
-    true,
-    false,
-    RenderType.CompositeState.builder()
-        .setLightmapState(LIGHTMAP)
-        .setShaderState(RENDERTYPE_SOLID_SHADER)
-        .setTextureState(BLOCK_SHEET_MIPPED)
-        .createCompositeState(true)
-);
-```
+!!! warning
+
+    必要な変数を設定しない場合クラッシュします。
+
+| 変数名 | 説明 |
+| --- | --- |
+| `x` | X座標 |
+| `y` | Y座標 |
+| `z` | Z座標 |
+| `red` | 赤成分 |
+| `green` | 緑成分 |
+| `blue` | 青成分 |
+| `alpha` | 透明度(float0.0~1.0, int0~255) |
+| `texU` | テクスチャ座標(U) |
+| `texV` | テクスチャ座標(V) |
+| `overlayUV` | オーバーレイUV座標(被ダメージ時の赤色等)(パック済み) |
+| `lightmapUV` | ライトマップUV |
+| `normalX` | 法線ベクトルX |
+| `normalY` | 法線ベクトルY |
+| `normalZ` | 法線ベクトルZ |
+
+## テクスチャアトラス
+
+### 資料
+
+- [Minecraft Wiki](https://ja.minecraft.wiki/w/テクスチャ#テクスチャアトラス)
+
+OpenGLではテクスチャを切り替える(Bind)処理は比較的重い処理です。
+
+そのため、Minecraftでは大量のブロックやアイテムのテクスチャを**1枚の巨大な画像**にまとめて扱うことで、描画時の切り替えコストを削減しています。
+
+このまとめられた1枚の画像を**テクスチャアトラス**と呼びます。
+
+!!! tips
+
+    エンティティのテクスチャはテクスチャアトラスを使用していません。
+
+### 種類
+
+以下の静的なテクスチャアトラスが存在します。
+
+| 参照 | ID | 説明 |
+| --- | --- | --- |
+| `Sheets.BANNER_SHEET` | banner_patterns | バナー |
+| `Sheets.BED_SHEET` | beds | ベッド |
+| `Sheets.CHEST_SHEET` | chests | チェスト |
+| `Sheets.SHIELD_SHEET` | shield_patterns | シールド |
+| `Sheets.SIGN_SHEET` | signs | 看板 |
+| `Sheets.SHULKER_SHEET` | shulker_boxes | シャーカーボックス |
+| `Sheets.ARMOR_TRIMS_SHEET` | armor_trims | アーマートリム |
+| `Sheets.DECORATED_POT_SHEET` | decorated_pot | 飾り壺 |
+| `TextureAtlas.LOCATION_BLOCKS` | blocks | ブロック |
+| `TextureAtlas.LOCATION_PARTICLES` | particle | パーティクル |
+| `textures/atlas/paintings.png` | paintings | 絵画 |
+| `textures/atlas/mob_effects.png` | mob_effects | モブエフェクト |
+
+比較的汎用に使えるのは `TextureAtlas.LOCATION_BLOCKS` です。
+
+## RenderType
+
+[#RenderType](./render-type.md) で解説しています。
+
