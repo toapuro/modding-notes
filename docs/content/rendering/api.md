@@ -61,7 +61,7 @@ VertexConsumer を RenderType ごとに振り分け、結果的にバッチレ�
 
 `RenderType` で指定されている `VertexFormat` によって必要な変数が異なります
 
-[#VertexFormat](./render-type.md#vertexformat) を参照
+[#VertexFormat](./render-options.md#vertexformat) を参照
 
 !!! warning
 
@@ -131,4 +131,4 @@ OpenGLではテクスチャを切り替える(Bind)処理は比較的重い処�
 
 ## RenderType
 
-[#RenderType](./render-type.md#rendertype) で解説しています。
+[#RenderType](./render-options.md#rendertype) で解説しています。

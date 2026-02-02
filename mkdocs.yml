@@ -101,8 +101,8 @@ nav:
 
   - レンダリング:
     - 基本: content/rendering/basic.md
-    - 基本概念: content/rendering/concepts.md
-    - 描画設定: content/rendering/render-type.md
+    - 基本概念: content/rendering/api.md
+    - 描画設定: content/rendering/render-options.md
 
   - レジストリ:
     - レジストリについて: content/registries/basic.md

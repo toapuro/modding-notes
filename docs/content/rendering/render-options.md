@@ -38,7 +38,7 @@
 
 `RenderType.CompositeState.builder()` で作成する。
 
-- `setTextureState`: テクスチャアトラスの指定([参照](./concepts.md#テクスチャアトラス))
+- `setTextureState`: [テクスチャアトラス](./api.md#テクスチャアトラス)の指定
 - `setShaderState`: シェーダーの指定
 - `setTransparencyState`: 半透明の処理方法([#ブレンドモード](#ブレンドモード))の指定
 - `setDepthTestState`: 深度テストの指定
@@ -48,7 +48,7 @@
 - `setLayeringState`: レイヤリング(ポリゴンオフセットなど)の指定
 - `setOutputState`: 出力先[レンダーターゲット](#レンダーターゲット)の指定
 - `setTexturingState`: テクスチャの準備の指定
-- `setWriteMaskState`: 書き込みバッファへの書き込み設定(カラー)
+- `setWriteMaskState`: 書き込むバッファのマスク設定(カラーバッファや深度バッファ)
 - `setLineState`: 線の太さを指定
 - `setColorLogicState`: [ブレンドモード](#ブレンドモード)の方法を指定
 - `createCompositeState`: 設定をビルドする
