@@ -131,4 +131,4 @@ OpenGLではテクスチャを切り替える(Bind)処理は比較的重い処�
 
 ## RenderType
 
-[#RenderType](./render-type.md) で解説しています。
+[#RenderType](./render-type.md#rendertype) で解説しています。
