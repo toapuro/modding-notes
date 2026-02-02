@@ -119,16 +119,66 @@ OpenGLにおいて、すべての物体は頂点の集まりによって構成�
 - ライトマップ: 光のテクスチャ
 - オーバーレイテクスチャ: ダメージ表現やTNTの点滅等に使われるテクスチャのUVの指定
 
-## 描画の流れ
+## レンダリングパイプライン
 
-- `PoseStack` で対象の位置に移動
-- `MultiBufferSource` から `VertexConsumer` を取得
-- `VertexConsumer` で頂点やその情報を登録
-- ～～～
-- `MultiBufferSource#endBatch` が呼ばれる
-- `BufferBuilder` の描画バッファが決定される
-- `RenderType` の設定が適応される
-- GPUに描画バッファがアップロードされる
-- ユニフォームなどがセットアップされる
-- 描画実行
-- `RenderType` の設定が戻される
+### ラスタライズ
+
+頂点で構成された図形を、フラグメントに変換する処理。
+
+塗りつぶすピクセルごとに頂点の情報(色、UV、法線等)を線形補間して割り当てます。
+
+### フラグメント(Fragment)
+
+ピクセルになる前の計算途中のデータです。
+
+ピクセル座標、深度値、テクスチャ座標等、線形補間されたデータを持ちます。
+
+### Fragment Shader
+
+フラグメントシェーダーは、フラグメントの情報を元に、最終的な色を決定するシェーダープログラムです。
+
+つまり、描画する色を決定するシェーダープログラムです。
+
+例
+
+```glsl title="position_color.fsh"
+#version 150
+
+in vec4 vertexColor;
+
+uniform vec4 ColorModulator;
+
+out vec4 fragColor;
+
+void main() {
+    vec4 color = vertexColor;
+    if (color.a == 0.0) {
+        discard;
+    }
+    fragColor = color * ColorModulator;
+}
+```
+
+### Vertex Shader
+
+頂点シェーダーは、頂点の情報を元に、最終的な位置を決定するシェーダープログラムです。
+
+例
+
+```glsl title="position_color.vsh"
+#version 150
+
+in vec3 Position;
+in vec4 Color;
+
+uniform mat4 ModelViewMat;
+uniform mat4 ProjMat;
+
+out vec4 vertexColor;
+
+void main() {
+    gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
+
+    vertexColor = Color;
+}
+```

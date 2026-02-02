@@ -8,11 +8,13 @@
 
 これによってプレイヤーの手に持った剣だけを回転させる、といったことが可能になります。
 
-- `push`: 現在の状態(位置・回転)を保存する。ここから局所的な作業を始める合図。
-- `translate`: 座標を移動する。
-- `scale`: 座標を拡大縮小する。
-- `rotate`: 座標を回転する。
-- `pop`: 保存した状態に戻す。作業終了。
+| メソッド名 | 説明 |
+| --- | --- |
+| `push` | 現在の状態(位置・回転)を保存する。ここから局所的な作業を始める合図。 |
+| `translate` | 座標を移動する。 |
+| `scale` | 座標を拡大縮小する。 |
+| `rotate` | 座標を回転する。 |
+| `pop` | 保存した状態に戻す。作業終了。 |
 
 !!! warning
 
@@ -28,17 +30,28 @@
 
 ### MultiBufferSource(BufferSource)
 
-結果的にバッチレンダリングされるように `VertexConsumer` を振り分けてくれるクラス。
+VertexConsumer を RenderType ごとに振り分け、結果的にバッチレンダリングを行うためのクラスです。
 
-`MultiBufferSource#getBuffer(RenderType)` で `VertexConsumer` を取得できます。
+複数の描画をまとめて処理できるため、レンダリング効率が向上します。
 
-動作としては、
-異なる `RenderType` が渡された場合 `endBatch` され、描画される
-というもので、
+`MultiBufferSource#getBuffer(RenderType)` を呼び出すことで、指定した RenderType に対応する VertexConsumer を取得できます。
 
-その `endBatch` が呼び出されるまで描画が行われません。
+異なる RenderType が渡された場合、それまでのバッチは `endBatch` によって終了され、その時点で描画が実行されます。
 
-しかし、`GuiGraphics` 等は自動で `endBatch` を呼ぶため、手動で呼ぶ必要はありません。
+!!! warning
+
+    バッチが終了したタイミングで描画されるため、`endBatch` が呼ばれない限り描画されません。(GuiGraphics等は自動で`endBatch`を呼ぶ)
+
+### Tesselator
+
+即時レンダリング用のクラス。
+
+`MultiBufferSource` とは異なり、自動的にバッチレンダリングはされない。
+
+`Tesselator.getInstance()` で取得し、
+`.getBuilder(RenderType)` で `VertexConsumer` を取得する。
+
+`.end` で明示的に描画します。
 
 ### VertexConsumer(BufferBuilder)
 
@@ -46,9 +59,15 @@
 
 頂点は以下の値を持ちます。
 
-`RenderType` によって必要な変数が異なります。
+`RenderType` で指定されている `VertexFormat` によって必要な変数が異なります
+
+[#VertexFormat](./render-type.md#vertexformat) を参照
 
 !!! warning
+
+    `VertexFormat` で指定されている順番通りに `VertexConsumer` に頂点情報を渡す必要があります。
+
+!!! danger
 
     必要な変数を設定しない場合クラッシュします。
 
@@ -68,6 +87,10 @@
 | `normalX` | 法線ベクトルX |
 | `normalY` | 法線ベクトルY |
 | `normalZ` | 法線ベクトルZ |
+
+!!! info
+
+    線は特殊で、視点から終点へ向かう方向を表すベクトルとして設定する必要があります。
 
 ## テクスチャアトラス
 
@@ -109,4 +132,3 @@ OpenGLではテクスチャを切り替える(Bind)処理は比較的重い処�
 ## RenderType
 
 [#RenderType](./render-type.md) で解説しています。
-
