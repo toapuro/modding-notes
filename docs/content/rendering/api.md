@@ -100,52 +100,36 @@ VertexConsumer を RenderType ごとに振り分け、結果的にバッチレ�
     線は特殊で、視点から終点へ向かう方向を表すベクトルとして設定する必要があります。
 
 ```java
-/**
- * テクスチャ付き四角形の描画
- * @param x 始点X座標
- * @param y 始点Y座標
- * @param z 始点Z座標
- * @param width X幅
- * @param height Y幅
- * @param depth Z幅
- * @param u テクスチャ座標(U)
- * @param v テクスチャ座標(V)
- */
-public static void drawTexturedQuad(
+public static void drawHorizontalQuad(
         PoseStack poseStack,
         MultiBufferSource buffer,
-        float x0, float y0, float z0,
-        float width, float height, float depth,
+        float x0, float y, float z0,
+        float width, float depth,
         float u, float v,
         int r, int g, int b, int a
 ) {
     Matrix4f matrix4f = poseStack.last().pose();
     Matrix3f matrix3f = poseStack.last().normal();
 
-    VertexConsumer consumer = buffer.getBuffer(RenderType.lines());
+    VertexConsumer consumer = buffer.getBuffer(RenderType.lightning());
 
     float x1 = x0 + width;
-    float y1 = y0 + height;
     float z1 = z0 + depth;
 
-    consumer.vertex(matrix4f, x0, y0, z0)
+    consumer.vertex(matrix4f, x0, y, z0)
             .color(r, g, b, a)
-            .normal(matrix3f, dx, dy, dz)
             .endVertex();
 
-    consumer.vertex(matrix4f, x2, y2, z2)
+    consumer.vertex(matrix4f, x1, y, z0)
             .color(r, g, b, a)
-            .normal(matrix3f, dx, dy, dz)
             .endVertex();
     
-    consumer.vertex(matrix4f, x1, y1, z1)
+    consumer.vertex(matrix4f, x1, y, z1)
             .color(r, g, b, a)
-            .normal(matrix3f, dx, dy, dz)
             .endVertex();
 
-    consumer.vertex(matrix4f, x2, y2, z2)
+    consumer.vertex(matrix4f, x0, y, z1)
             .color(r, g, b, a)
-            .normal(matrix3f, dx, dy, dz)
             .endVertex();
 }
 
