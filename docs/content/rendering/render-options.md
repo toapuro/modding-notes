@@ -134,7 +134,7 @@ GPUに送る情報のレイアウトを決定するためのフォーマット�
 | `LIGHTNING_TRANSPARENCY` | 発光合成 | `src * src.a + dst` |
 | `GLINT_TRANSPARENCY` | エンチャントの輝き | `rgb = src * src.a + dst, a = dst.a` |
 | `CRUMBLING_TRANSPARENCY` | 破壊表現の合成 | `rgb = 2 * src * dst, a = src.a` |
-| `TRANSLUCENT_TRANSPARENCY` | 半透明合成 | `rgb = src * src.a + dst * (1 - dst.a), a = src.a + (1- dst.a)` |
+| `TRANSLUCENT_TRANSPARENCY` | 半透明合成 | `rgb = src * src.a + dst * (1 - src.a), a = src.a + dst.a * (1 - src.a)` |
 
 ## 深度
 
