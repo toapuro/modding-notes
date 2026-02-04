@@ -245,7 +245,7 @@
 !!! warning
     特にMixinが被った場合、競合しクラッシュするので使用は控えましょう。
 
-[#MixinExtrasの利用](#mixinextrasの利用) で解説する `@ModifyExpressionValue` で記述すると安全です。
+[#MixinExtrasの利用](./mixin-extras.md) で解説する `@ModifyExpressionValue` で記述すると安全です。
 
 #### @ModifyArg
 
