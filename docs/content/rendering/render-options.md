@@ -83,22 +83,38 @@ GPUに送る情報のレイアウトを決定するためのフォーマット�
 
     `VertexFormat` で指定されている順番通りに `VertexConsumer` に頂点情報を渡す必要があります。
 
+**DefaultVertexFormat** の定数
+
 | 名前 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| BLIT_SCREEN | Position | UV | Color |
-| BLOCK | Position | Color | UV0 | UV2 | Normal | Padding |
-| NEW_ENTITY | Position | Color | UV0 | UV1 | UV2 | Normal | Padding |
-| PARTICLE | Position | UV0 | Color | UV2 |
-| POSITION | Position |
-| POSITION_COLOR | Position | Color |
-| POSITION_COLOR_NORMAL | Position | Color | Normal | Padding |
-| POSITION_COLOR_LIGHTMAP | Position | Color | UV2 |
-| POSITION_TEX | Position | UV0 |
-| POSITION_COLOR_TEX | Position | Color | UV0 |
-| POSITION_TEX_COLOR | Position | UV0 | Color |
-| POSITION_COLOR_TEX_LIGHTMAP | Position | Color | UV0 | UV2 |
-| POSITION_TEX_LIGHTMAP_COLOR | Position | UV0 | UV2 | Color |
-| POSITION_TEX_COLOR_NORMAL | Position | UV0 | Color | Normal | Padding |
+| `BLIT_SCREEN` | Position | UV | Color |
+| `BLOCK` | Position | Color | UV0 | UV2 | Normal | Padding |
+| `NEW_ENTITY` | Position | Color | UV0 | UV1 | UV2 | Normal | Padding |
+| `PARTICLE` | Position | UV0 | Color | UV2 |
+| `POSITION` | Position |
+| `POSITION_COLOR` | Position | Color |
+| `POSITION_COLOR_NORMAL` | Position | Color | Normal | Padding |
+| `POSITION_COLOR_LIGHTMAP` | Position | Color | UV2 |
+| `POSITION_TEX` | Position | UV0 |
+| `POSITION_COLOR_TEX` | Position | Color | UV0 |
+| `POSITION_TEX_COLOR` | Position | UV0 | Color |
+| `POSITION_COLOR_TEX_LIGHTMAP` | Position | Color | UV0 | UV2 |
+| `POSITION_TEX_LIGHTMAP_COLOR` | Position | UV0 | UV2 | Color |
+| `POSITION_TEX_COLOR_NORMAL` | Position | UV0 | Color | Normal | Padding |
+
+`"UV0"` と `"UV"` は同値である。
+
+**VertexFormatの要素**
+
+| 名前 | 説明 | 対応するメソッド(VertexConsumer) |
+| --- | --- | --- |
+| Position | 頂点座標 | `vertex(x, y, z)` |
+| Color | 色 | `color(r, g, b, a)` |
+| UV0 | テクスチャUV | `uv(u, v)` |
+| UV1 | オーバーレイUV | `overlayCoords(u, v)` |
+| UV2 | ライトマップUV | `uv2(u, v)` |
+| Normal | 法線 | `normal(x, y, z)` |
+| Padding | 余白 |
 
 ## ブレンドモード
 

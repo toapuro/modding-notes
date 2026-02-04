@@ -24,7 +24,14 @@
 
 回転を表す数学的概念。
 
-`Axis.YP.rotationDegrees(90)` のように軸を指定して回転を作成し、PoseStackに適用できます。
+`Axis.YP.rotationDegrees(90)` のように軸を指定して `Quaternion` を作成し、`PoseStack` に適応できます。
+
+```java
+// Y軸中心に+90度回転します
+poseStack.mulPose(Axis.YP.rotationDegrees(90));
+// Y軸中心に-90度回転します
+poseStack.mulPose(Axis.Y.rotationDegrees(90));
+```
 
 ## 描画バッファ
 
@@ -91,6 +98,85 @@ VertexConsumer を RenderType ごとに振り分け、結果的にバッチレ�
 !!! info
 
     線は特殊で、視点から終点へ向かう方向を表すベクトルとして設定する必要があります。
+
+```java
+/**
+ * テクスチャ付き四角形の描画
+ * @param x 始点X座標
+ * @param y 始点Y座標
+ * @param z 始点Z座標
+ * @param width X幅
+ * @param height Y幅
+ * @param depth Z幅
+ * @param u テクスチャ座標(U)
+ * @param v テクスチャ座標(V)
+ */
+public static void drawTexturedQuad(
+        PoseStack poseStack,
+        MultiBufferSource buffer,
+        float x0, float y0, float z0,
+        float width, float height, float depth,
+        float u, float v,
+        int r, int g, int b, int a
+) {
+    Matrix4f matrix4f = poseStack.last().pose();
+    Matrix3f matrix3f = poseStack.last().normal();
+
+    VertexConsumer consumer = buffer.getBuffer(RenderType.lines());
+
+    float x1 = x0 + width;
+    float y1 = y0 + height;
+    float z1 = z0 + depth;
+
+    consumer.vertex(matrix4f, x0, y0, z0)
+            .color(r, g, b, a)
+            .normal(matrix3f, dx, dy, dz)
+            .endVertex();
+
+    consumer.vertex(matrix4f, x2, y2, z2)
+            .color(r, g, b, a)
+            .normal(matrix3f, dx, dy, dz)
+            .endVertex();
+    
+    consumer.vertex(matrix4f, x1, y1, z1)
+            .color(r, g, b, a)
+            .normal(matrix3f, dx, dy, dz)
+            .endVertex();
+
+    consumer.vertex(matrix4f, x2, y2, z2)
+            .color(r, g, b, a)
+            .normal(matrix3f, dx, dy, dz)
+            .endVertex();
+}
+
+// 線の描画
+public static void drawLine(
+        PoseStack poseStack,
+        MultiBufferSource buffer,
+        float x1, float y1, float z1,
+        float x2, float y2, float z2,
+        int r, int g, int b, int a
+) {
+    Matrix4f matrix4f = poseStack.last().pose();
+    Matrix3f matrix3f = poseStack.last().normal();
+
+    VertexConsumer consumer = buffer.getBuffer(RenderType.lines());
+
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+    float dz = z2 - z1;
+
+    consumer.vertex(matrix4f, x1, y1, z1)
+            .color(r, g, b, a)
+            .normal(matrix3f, dx, dy, dz)
+            .endVertex();
+
+    consumer.vertex(matrix4f, x2, y2, z2)
+            .color(r, g, b, a)
+            .normal(matrix3f, dx, dy, dz)
+            .endVertex();
+}
+```
 
 ## テクスチャアトラス
 

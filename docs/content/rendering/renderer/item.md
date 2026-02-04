@@ -1,10 +1,8 @@
 # アイテムレンダラー
 
-アイテムのレンダリングをカスタムする大まかな方法は二つあります。
+## 独自レンダラーを作成する
 
-## カスタムレンダラーを作成する
-
-### レンダラーの作成
+### レンダラークラスの作成
 
 `BlockEntityWithoutLevelRenderer` の継承クラスを作る。
 
@@ -29,7 +27,7 @@ class ExampleItemRenderer extends BlockEntityWithoutLevelRenderer {
 `Item#initializeClient` メソッドをオーバーライドし、
 `consumer.accept` に `IClientItemExtensions` の実装を渡します。
 
-例では匿名クラスを使用してとうろくしています。
+例では匿名クラスを使用して登録しています。
 
 ```java
 public class ExampleItem extends Item {
@@ -53,5 +51,17 @@ public class ExampleItem extends Item {
             }
         );
     }
+}
+```
+
+### モデルの設定
+
+[#builtin/entity](./model.md#builtinentity) を参照してください。
+
+モデルの `"parent"` を `"builtin/entity"` に設定する必要があります。
+
+```json
+{
+    "parent": "builtin/entity"
 }
 ```
