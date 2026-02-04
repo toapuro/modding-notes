@@ -15,6 +15,10 @@
 ```java
 @Mixin(Example.class)
 public abstract class ExampleMixin extends ExampleParent implements ExampleInterface {
+
+    public ExampleMixin(...) {
+        super(...);
+    }
 }
 ```
 
