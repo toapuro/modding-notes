@@ -182,22 +182,24 @@ OpenGLではテクスチャを切り替える(Bind)処理は比較的重い処�
 
 以下の静的なテクスチャアトラスが存在します。
 
-| 参照 | ID | 説明 |
-| --- | --- | --- |
-| `Sheets.BANNER_SHEET` | banner_patterns | バナー |
-| `Sheets.BED_SHEET` | beds | ベッド |
-| `Sheets.CHEST_SHEET` | chests | チェスト |
-| `Sheets.SHIELD_SHEET` | shield_patterns | シールド |
-| `Sheets.SIGN_SHEET` | signs | 看板 |
-| `Sheets.SHULKER_SHEET` | shulker_boxes | シャーカーボックス |
-| `Sheets.ARMOR_TRIMS_SHEET` | armor_trims | アーマートリム |
-| `Sheets.DECORATED_POT_SHEET` | decorated_pot | 飾り壺 |
-| `TextureAtlas.LOCATION_BLOCKS` | blocks | ブロック |
-| `TextureAtlas.LOCATION_PARTICLES` | particle | パーティクル |
-| `textures/atlas/paintings.png` | paintings | 絵画 |
-| `textures/atlas/mob_effects.png` | mob_effects | モブエフェクト |
+| 参照 | ID | ディレクトリ | 説明 |
+| --- | --- | --- | --- |
+| `Sheets.BANNER_SHEET` | banner_patterns | entity/banner_base, entity/banner/* | バナー |
+| `Sheets.BED_SHEET` | beds | entity/bed/* | ベッド |
+| `Sheets.CHEST_SHEET` | chests | entity/chest/* | チェスト |
+| `Sheets.SHIELD_SHEET` | shield_patterns | entity/shield_base, entity/shield_base_nopattern, entity/shield/* | シールド |
+| `Sheets.SIGN_SHEET` | signs | entity/signs/* | 看板 |
+| `Sheets.SHULKER_SHEET` | shulker_boxes | entity/shulker/* | シャーカーボックス |
+| `Sheets.ARMOR_TRIMS_SHEET` | armor_trims | 特殊[^1] | アーマートリム |
+| `Sheets.DECORATED_POT_SHEET` | decorated_pot | entity/decorated_pot | 飾り壺 |
+| `TextureAtlas.LOCATION_BLOCKS` | blocks | block/*, item/*, entity/conduit, ... | ブロック |
+| `TextureAtlas.LOCATION_PARTICLES` | particles | particle/* | パーティクル |
+| `textures/atlas/paintings.png` | paintings | painting/* | 絵画 |
+| `textures/atlas/mob_effects.png` | mob_effects | mob_effect/* | モブエフェクト |
 
 比較的汎用に使えるのは `TextureAtlas.LOCATION_BLOCKS` です。
+
+[^2]: `paletted_permutations` を使用している。`PalettedPermutations` を参照。
 
 ## RenderType
 
