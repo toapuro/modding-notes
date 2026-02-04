@@ -192,7 +192,7 @@ Z-Fightingを回避するために使用されるオプション
 | 名称 | 説明 |
 | --- | --- |
 | `NO_LAYERING` | レイヤリングを行わない |
-| `POLYGON_OFFSET_LAYERING` | `glPolygonOffset` を使用し深度値 |
+| `POLYGON_OFFSET_LAYERING` | `glPolygonOffset` を使用し深度値を手前にずらす |
 | `VIEW_OFFSET_Z_LAYERING` | `PoseStack` を微妙に内側にスケールする |
 
 ## レンダーターゲット
