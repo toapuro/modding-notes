@@ -24,7 +24,7 @@
 
 回転を表す数学的概念。
 
-`Axis.YP.rotationDegrees(90)` のように軸を指定して `Quaternion` を作成し、`PoseStack` に適応できます。
+`Axis.YP.rotationDegrees(90)` のように軸を指定して `Quaternion` を作成し、`PoseStack` に適用できます。
 
 ```java
 // Y軸中心に+90度回転します

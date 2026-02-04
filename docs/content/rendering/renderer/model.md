@@ -14,7 +14,7 @@
 
 ### builtin/entity
 
-`BuiltInModel` としてモデルが登録され、唯一 `IClientItemExtensions`の `getCustomRenderer` が適応されるモデルです。
+`BuiltInModel` としてモデルが登録され、唯一 `IClientItemExtensions`の `getCustomRenderer` が適用されるモデルです。(`BakedModel#isCustomRenderer`が`true`)
 
 その代わりに、モデルが一切描画されません。
 
