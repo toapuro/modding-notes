@@ -240,5 +240,24 @@ public class ExampleModel extends SimpleUnbakedGeometry<ExampleModel> {
             return model;
         }
     }
+```
+
+### モデルローダーの登録
+
+`ModelEvent.RegisterGeometryLoaders` イベントで登録します。
+
+MODバスに登録してください。
+
+```java
+@Mod.EventBusSubscriber(modid = ExampleMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class ModelClientEvents {
+
+    @SubscribeEvent
+    public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders loaders) {
+        loaders.register("cube", CubeModel.LOADER);
+        loaders.register("example", ExampleModel.LOADER);
+    }
 }
 ```
+
+第一引数がIDとなり、これはJsonモデルの `"loader"` に当たります。
