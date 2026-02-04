@@ -50,7 +50,7 @@
 - `setTexturingState`: テクスチャの準備の指定
 - `setWriteMaskState`: 書き込むバッファのマスク設定(カラーバッファや深度バッファ)
 - `setLineState`: 線の太さを指定
-- `setColorLogicState`: [ブレンドモード](#ブレンドモード)の方法を指定
+- `setColorLogicState`: 色調整ののモードを指定
 - `createCompositeState`: 設定をビルドする
 
 バニラのRenderTypeの例
