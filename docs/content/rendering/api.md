@@ -109,8 +109,8 @@ public static void drawHorizontalQuad(
         int r, int g, int b, int a
 ) {
     Matrix4f matrix4f = poseStack.last().pose();
-    Matrix3f matrix3f = poseStack.last().normal();
 
+    // 単色
     VertexConsumer consumer = buffer.getBuffer(RenderType.lightning());
 
     float x1 = x0 + width;
