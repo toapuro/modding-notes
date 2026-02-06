@@ -1,0 +1,2167 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Forge Modding Explained">
+      
+      
+        <meta name="author" content="toapuro">
+      
+      
+        <link rel="canonical" href="https://toapuro.github.io/modding-notes/content/mixin/injections/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../mixin-extras/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>インジェクション - Forge Modding Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8.17%202.76A10.1%2010.1%200%200%201%2012%202c1.31%200%202.61.26%203.83.76%201.21.5%202.31%201.24%203.24%202.17s1.67%202.03%202.17%203.24c.5%201.22.76%202.52.76%203.83%200%202.65-1.05%205.2-2.93%207.07A9.97%209.97%200%200%201%2012%2022a10.1%2010.1%200%200%201-3.83-.76%2010%2010%200%200%201-3.24-2.17A9.97%209.97%200%200%201%202%2012c0-2.65%201.05-5.2%202.93-7.07.93-.93%202.03-1.67%203.24-2.17M12%2017l1.56-3.42L17%2012l-3.44-1.56L12%207l-1.57%203.44L7%2012l3.43%201.58z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mixin" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Forge Modding Notes" class="md-header__button md-logo" aria-label="Forge Modding Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Forge Modding Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              インジェクション
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/toapuro/modding-notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    toapuro/modding-notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Forge Modding Notes" class="md-nav__button md-logo" aria-label="Forge Modding Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Forge Modding Notes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/toapuro/modding-notes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    toapuro/modding-notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    入門
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    入門
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    環境構築
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/dependency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    依存関係の追加
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/mod-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modファイル構造
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/mod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modクラス
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    発展
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    発展
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    マッピング
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/gradle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    レンダリング
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    レンダリング
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rendering/basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基本
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rendering/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基本概念
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rendering/render-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    描画設定
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    レンダラー
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    レンダラー
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rendering/renderer/item/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アイテム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rendering/renderer/model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    モデル
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    レジストリ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    レジストリ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../registries/basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    レジストリについて
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../registries/item/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アイテム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mixin
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mixin
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基本
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    インジェクション
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    インジェクション
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#インジェクション" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インジェクション
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インジェクション">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#at" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @At
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="@At">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#引数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INVOKE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FIELD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#インジェクション_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インジェクション
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インジェクション">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基本的な使用法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本的な使用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Inject
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="@Inject">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cancellable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cancellable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        locals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redirect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Redirect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifyarg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @ModifyArg
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="@ModifyArg">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        index
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifyargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @ModifyArgs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifyvariable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @ModifyVariable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Overwrite
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shadow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Shadow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Unique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#アクセッサーインターフェース" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アクセッサー(インターフェース)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="アクセッサー(インターフェース)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Accessor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mixin-extras/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MixinExtras
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トリック
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#インジェクション" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インジェクション
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インジェクション">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#at" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @At
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="@At">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#引数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INVOKE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FIELD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#インジェクション_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インジェクション
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インジェクション">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基本的な使用法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本的な使用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Inject
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="@Inject">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cancellable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cancellable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        locals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redirect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Redirect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifyarg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @ModifyArg
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="@ModifyArg">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        index
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifyargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @ModifyArgs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifyvariable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @ModifyVariable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Overwrite
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shadow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Shadow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Unique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#アクセッサーインターフェース" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アクセッサー(インターフェース)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="アクセッサー(インターフェース)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @Accessor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="mixin">Mixin<a class="headerlink" href="#mixin" title="Permanent link">&para;</a></h1>
+<h2 id="インジェクション">インジェクション<a class="headerlink" href="#インジェクション" title="Permanent link">&para;</a></h2>
+<p>まずどこにコードを注入するか、どこのコードを改変するかを指定するための@Atを解説します</p>
+<h3 id="at">@At<a class="headerlink" href="#at" title="Permanent link">&para;</a></h3>
+<p><code>@At</code> はどこにコードを注入するかを指定します。</p>
+<p><code>@At("HEAD")</code>のように使用します</p>
+<h4 id="引数">引数<a class="headerlink" href="#引数" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>value</code>(必須): 場所の種類</li>
+<li><code>remap</code>: マッピングを適用するかどうか。バニラクラスではない場合<code>remap = false</code>を指定する必要があります。ここで指定した値はMixinクラス内のすべてのインジェクション、<code>@At</code>にも影響します。</li>
+<li><code>targets</code>: 対象のクラスが非公開な時や、コンパイル時存在しない場合にFQCN<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">1</a></sup>で指定します</li>
+<li><code>priority</code>: Mixinの優先度。高いほど後に適用される。</li>
+<li><code>ordinal</code>: マッチした中で何番目か</li>
+</ul>
+<p>以下が<code>value</code>引数の取りうる主な値です。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">値</th>
+<th style="text-align: left;">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>HEAD</code></td>
+<td style="text-align: left;">メソッドの最初</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>TAIL</code></td>
+<td style="text-align: left;">メソッドの最後の <code>return</code> の前</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>RETURN</code></td>
+<td style="text-align: left;"><code>return</code> 文の前</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>INVOKE</code></td>
+<td style="text-align: left;">特定のメソッドを呼び出す前 (<code>target</code>引数必須)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>FIELD</code></td>
+<td style="text-align: left;">フィールドアクセス (<code>target</code>引数必須)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>STORE</code></td>
+<td style="text-align: left;">変数代入 (<code>@ModifyVariable</code>のみ)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>LOAD</code></td>
+<td style="text-align: left;">変数の取得 (<code>@ModifyVariable</code>のみ)</td>
+</tr>
+</tbody>
+</table>
+<p>以下詳細な説明が必要なものを解説します。</p>
+<h4 id="invoke">INVOKE<a class="headerlink" href="#invoke" title="Permanent link">&para;</a></h4>
+<p><code>@At(value = "INVOKE", target = "&lt;descriptor&gt;")</code></p>
+<p>このように使います。</p>
+<p><code>target</code>引数はメソッドのデスクリプタを指定します。</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>IntellijのMinecraft Developmentプラグインが補完してくれるので、
+すぐ覚える必要はないです。</p>
+</div>
+<details class="デスクリプタの解説">
+<summary>デスクリプタの解説</summary>
+<p><strong>デスクリプタで指定するパッケージは全て区切り文字が<code>.</code>ではなく<code>/</code>であることに注意</strong></p>
+<p><strong>クラスの指定</strong></p>
+<p>クラスは
+<code>Lパッケージ/クラス名;</code></p>
+<p>このようなフォーマットで記述します。</p>
+<p>例えばオブジェクトであれば以下の様に記述します</p>
+<p><code>Ljava/lang/Object;</code></p>
+<p><strong>メソッドの指定</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.toapuro.example</span><span class="p">;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">class</span> <span class="nc">Example</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>Lio/github/toapuro/example/Example;add(II)I</code></p>
+<p>この様に対応します。</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.toapuro.example</span><span class="p">;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">class</span> <span class="nc">Example</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">concat</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>Lio/github/toapuro/example/Example;concat(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;</code></p>
+<p>この様に対応します。</p>
+<p>なんとなくイメージできたかと思います。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">型</th>
+<th style="text-align: left;">Descriptor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">byte</td>
+<td style="text-align: left;">B</td>
+</tr>
+<tr>
+<td style="text-align: left;">char</td>
+<td style="text-align: left;">C</td>
+</tr>
+<tr>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">D</td>
+</tr>
+<tr>
+<td style="text-align: left;">float</td>
+<td style="text-align: left;">F</td>
+</tr>
+<tr>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">I</td>
+</tr>
+<tr>
+<td style="text-align: left;">long</td>
+<td style="text-align: left;">J</td>
+</tr>
+<tr>
+<td style="text-align: left;">short</td>
+<td style="text-align: left;">S</td>
+</tr>
+<tr>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">Z</td>
+</tr>
+<tr>
+<td style="text-align: left;">Object</td>
+<td style="text-align: left;">Ljava/lang/Object;</td>
+</tr>
+</tbody>
+</table>
+<p>配列は<code>[</code>を先頭につけます。
+<code>int[]</code>であれば<code>[I</code>となります。</p>
+<p>後は<code>boolean</code> が <code>Z</code>、<code>long</code> が <code>J</code> であることに気をつけておけば大丈夫です。</p>
+</details>
+<h4 id="field">FIELD<a class="headerlink" href="#field" title="Permanent link">&para;</a></h4>
+<p><code>@At(value = "FIELD", target = "&lt;descriptor&gt;")</code></p>
+<p>このように使用します</p>
+<p>これもまたIntellijのMinecraft Developmentプラグインが補完してくれます。</p>
+<details class="フィールドのデクスリプタ指定">
+<summary>フィールドのデクスリプタ指定</summary>
+<p>フォーマットは以下の通りです。</p>
+<p><code>Lパッケージ/クラス名;フィールド名:フィールド型</code></p>
+<p><code>Boolean.TRUE</code>であれば</p>
+<p><code>Ljava/lang/Boolean;TRUE:Ljava/lang/Boolean;</code></p>
+<p>となります</p>
+</details>
+<h3 id="インジェクション_1">インジェクション<a class="headerlink" href="#インジェクション_1" title="Permanent link">&para;</a></h3>
+<p>インジェクションには種類が幾つかあります。</p>
+<p><code>@Inject</code>, <code>@Redirect</code>, <code>@ModifyArg</code>, <code>@ModifyArgs</code>, <code>@ModifyVariable</code>, <code>@ModifyConstant</code>, <code>@Overwrite</code></p>
+<p>これらを使い分けることで、様々なコードの改変が可能になります。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">名前</th>
+<th style="text-align: left;">用法</th>
+<th style="text-align: left;">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>@Inject</code></td>
+<td style="text-align: left;">コールバック</td>
+<td style="text-align: left;">元のメソッドの特定位置に処理を挿入します。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@Redirect</code></td>
+<td style="text-align: left;">リダイレクト</td>
+<td style="text-align: left;">メソッド呼び出しやフィールドアクセスなど、特定の処理を完全に置き換えます。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@ModifyArg</code></td>
+<td style="text-align: left;">引数変更</td>
+<td style="text-align: left;">他のメソッドを呼び出す際の、特定の引数を変更します。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@ModifyArgs</code></td>
+<td style="text-align: left;">引数変更</td>
+<td style="text-align: left;">他のメソッドを呼び出す際の、引数をまとめて変更します。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@ModifyVariable</code></td>
+<td style="text-align: left;">変数変更</td>
+<td style="text-align: left;">メソッド内のローカル変数を変更します。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@ModifyConstant</code></td>
+<td style="text-align: left;">定数変更</td>
+<td style="text-align: left;">メソッド内の定数値を変更します。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@Overwrite</code></td>
+<td style="text-align: left;">上書き</td>
+<td style="text-align: left;">メソッドの実装を完全に上書きします。競合のリスクが高いため、基本的には使用しません。</td>
+</tr>
+</tbody>
+</table>
+<p>引数や用法がほぼ同じものはまとめて解説します。</p>
+<h4 id="基本的な使用法">基本的な使用法<a class="headerlink" href="#基本的な使用法" title="Permanent link">&para;</a></h4>
+<p>元のメソッドの特定位置に処理を挿入します。</p>
+<p><strong><code>method</code></strong></p>
+<p>基本、対象のメソッドを引数<code>method</code>で指定します。</p>
+<p>デスクリプタで指定しますが、引数部分はオーバーロードがない場合省略できます。</p>
+<p>またワイルドカードが使用できます。</p>
+<p><strong><code>at</code></strong></p>
+<p><code>@At</code>で指定します</p>
+<p><strong><code>remap</code></strong></p>
+<p>難読化を解除するかどうかのフラグです。</p>
+<p>バニラクラスが対象ではない場合、<code>remap = false</code>を指定する必要があります。</p>
+<p><code>@Mixin</code>-&gt;<code>@インジェクション</code> -&gt; <code>@At</code> の順番で <code>remap</code> は影響されていきます。</p>
+<p>そのため <code>@Mixin</code> で <code>remap = false</code> を指定し、<code>@At</code> で難読化されたものを使用する場合、<code>@At</code> で <code>remap = true</code> を再指定する必要があります。</p>
+<p>これは<code>@At</code>のtarget引数を指定する際にも気をつける必要があります。</p>
+<p>難読化については <a href="../../advanced/mapping/">#マッピング</a> で解説しています。</p>
+<p><strong><code>require</code></strong></p>
+<p>対象が何個マッチする必要があるのかを指定します。</p>
+<p>これを下回る個数しか存在しないような環境の場合、クラッシュします。</p>
+<p>例えば<code>require = 0</code>では、対象が存在しなくてもクラッシュしません。</p>
+<h4 id="inject">@Inject<a class="headerlink" href="#inject" title="Permanent link">&para;</a></h4>
+<p>基本的に指定した場所の前にコードが注入されます。</p>
+<p>引数は元のメソッドと<code>CallbackInfo</code>を組み合わせたものになります。
+返り値は<code>void</code>。</p>
+<p>元のメソッドで<code>return</code>をしたい場合引数の<code>CallbackInfo ci</code>を使用して<code>ci.cancel()</code>と呼びます。</p>
+<p>返り値がある場合、
+引数の<code>CallbackInfoReturnable&lt;返り値の型&gt; cir</code></p>
+<div class="admonition tips">
+<p class="admonition-title">Tips</p>
+<p>Mixinメソッドの引数や返り値は、Minecraft Developmentプラグインの修正機能（Alt+Enterなど）を使うことで自動生成できます。</p>
+</div>
+<p>特殊な引数</p>
+<h5 id="cancellable"><strong><code>cancellable</code></strong><a class="headerlink" href="#cancellable" title="Permanent link">&para;</a></h5>
+<p>キャンセルできるかどうかを指定します。<code>CallbackInfo#cancel</code>や<code>CallbackInfoReturnable#setReturnValue</code>を使用する場合<code>true</code>を指定する必要があります。</p>
+<h5 id="locals"><strong><code>locals</code></strong><a class="headerlink" href="#locals" title="Permanent link">&para;</a></h5>
+<p>ローカル変数に関して指定する引数。</p>
+<p>主に以下3つの値を指定できます。(<code>LocalCapture</code>)</p>
+<ul>
+<li><code>NO_CAPTURE</code>: キャプチャしない(デフォルト)</li>
+<li><code>CAPTURE_FAILSOFT</code>: キャプチャしますが、失敗した場合スキップ</li>
+<li><code>CAPTURE_FAILHARD</code>: キャプチャしますが、失敗した場合クラッシュ</li>
+</ul>
+<p><a href="../mixin-extras/">#MixinExtrasの利用</a> で解説する <code>@Local</code> を利用するとより可読性が高く、より安全です。</p>
+<h5 id="shift"><strong><code>shift</code></strong><a class="headerlink" href="#shift" title="Permanent link">&para;</a></h5>
+<p>インジェクションの場所をちょっと調節できます。</p>
+<p>基本指定した場所の前にインジェクションをしますが、<code>shift</code>を指定することで後ろにインジェクションをすることができます。</p>
+<p>主に以下の4つの値を指定できます(<code>At.Shift</code>)</p>
+<ul>
+<li><code>NONE</code>: デフォルト</li>
+<li><code>BEFORE</code>: 指定した場所の前</li>
+<li><code>AFTER</code>: 指定した場所の後ろ</li>
+</ul>
+<h4 id="redirect">@Redirect<a class="headerlink" href="#redirect" title="Permanent link">&para;</a></h4>
+<p>対象を丸々置き換える。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>特にMixinが被った場合、競合しクラッシュするので使用は控えましょう。</p>
+</div>
+<p><a href="../mixin-extras/">#MixinExtrasの利用</a> で解説する <code>@ModifyExpressionValue</code> で記述すると安全です。</p>
+<h4 id="modifyarg">@ModifyArg<a class="headerlink" href="#modifyarg" title="Permanent link">&para;</a></h4>
+<p>他のメソッドを呼び出す際の、特定の引数を変更します。</p>
+<p>特殊な引数</p>
+<h5 id="index"><strong><code>index</code></strong><a class="headerlink" href="#index" title="Permanent link">&para;</a></h5>
+<p>何番目の引数を変更するかを指定します。</p>
+<p>基本 <code>void onCall(Args args)</code> です。</p>
+<h4 id="modifyargs">@ModifyArgs<a class="headerlink" href="#modifyargs" title="Permanent link">&para;</a></h4>
+<p><code>@ModifyArg</code> をまとめて1メソッドで行うことができます。</p>
+<p>メソッドの引数 <code>Args</code> を使用して操作します</p>
+<h4 id="modifyvariable">@ModifyVariable<a class="headerlink" href="#modifyvariable" title="Permanent link">&para;</a></h4>
+<p>基本的に<code>@At("STORE")</code>や<code>@At("LOAD")</code>を指定します。</p>
+<p>基本 <code>型 onCall(型 original)</code> です。</p>
+<p>基本的に型でしか指定できないため、<code>index</code> や <code>name</code>、@Atの<code>ordinal</code> で正確に指定します。</p>
+<p>引数(任意)</p>
+<ul>
+<li><code>index</code>: 変数の絶対インデックスを指定(バイトコードを見る必要がある)</li>
+<li><code>name</code>: 変数の名前を指定</li>
+</ul>
+<h4 id="overwrite">@Overwrite<a class="headerlink" href="#overwrite" title="Permanent link">&para;</a></h4>
+<p>メソッドをすべて置き換え。</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>互換性が無くなるので、他Modを一切考慮しない場合のみ使用してください。</p>
+</div>
+<p><code>@Inject</code>の<code>HEAD</code>でキャンセルすると競合が発生せずに、同じ動作を再現できるので安全です。</p>
+<h3 id="shadow">@Shadow<a class="headerlink" href="#shadow" title="Permanent link">&para;</a></h3>
+<p>Mixinクラス内部でのみ使用できる、対象クラスのフィールドやメソッドにアクセスするためのアノテーションです。</p>
+<p>アクセス修飾子(<code>private</code>等)を無視してアクセスできます。</p>
+<p>対象が <code>final</code> フィールドの場合 <code>@Final</code> アノテーションを付ける必要があります。</p>
+<p><code>@Mutable</code> を付けることによって <code>final</code> も無視して代入できるようになります。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>@Shadowのフィールドには <code>final</code> 修飾子を使用してはいけません<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">2</a></sup>。</p>
+</div>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nd">@Shadow</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">exampleValue</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nd">@Mutable</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nd">@Shadow</span><span class="w"> </span><span class="nd">@Final</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">finalExampleValue</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="unique">@Unique<a class="headerlink" href="#unique" title="Permanent link">&para;</a></h3>
+<p>Mixinクラスで使用でき、対象クラスに存在しないフィールドやメソッドを追加定義する際に使用します。</p>
+<p>初期値を設定することもできます。</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nd">@Unique</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">example$uniqueValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nd">@Unique</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">example$uniqueMethod</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>基本的に <code>&lt;modid&gt;$メソッド名</code> で記述するのが良しとされています。</p>
+<p>Mixinは実行時、対象のクラスにマージされているので、メソッド名が被ってしまうと競合し、クラッシュする可能性があるためです。</p>
+<p><a href="../tricks/">#Mixinトリック</a> でこれを応用する方法を解説しています。</p>
+<h3 id="アクセッサーインターフェース">アクセッサー(インターフェース)<a class="headerlink" href="#アクセッサーインターフェース" title="Permanent link">&para;</a></h3>
+<p>資料: <a href="https://wiki.fabricmc.net/ja:tutorial:mixin_accessors">AccessorとInvoker - Fabric</a></p>
+<p>アクセッサーとは、アクセス修飾子を無視してフィールドやメソッドにアクセスするために使用するMixinインターフェースです。</p>
+<p><code>@Shadow</code> とは違って、Mixinクラス以外からもアクセスできます。</p>
+<p>アクセッサーは<code>interface</code>で定義します。</p>
+<p>以下例
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">@Mixin</span><span class="p">(</span><span class="n">Example</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">remap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">ExampleAccessor</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nd">@Accessor</span><span class="p">(</span><span class="s">&quot;exampleValue&quot;</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">getExampleValue</span><span class="p">();</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nd">@Mutable</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nd">@Accessor</span><span class="p">(</span><span class="s">&quot;exampleValue&quot;</span><span class="p">)</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setExampleValue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">exampleValue</span><span class="p">);</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="nd">@Invoker</span><span class="p">(</span><span class="s">&quot;handle&quot;</span><span class="p">)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">invokeHandle</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">something</span><span class="p">);</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="p">}</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c1">// 使用法</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">Example</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="p">((</span><span class="n">ExampleAccessor</span><span class="p">)(</span><span class="n">Object</span><span class="p">)</span><span class="n">example</span><span class="p">).</span><span class="na">setExampleValue</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1">// もしくは</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="n">ExampleAccessor</span><span class="w"> </span><span class="n">accessor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ExampleAccessor</span><span class="p">)</span><span class="w"> </span><span class="n">example</span><span class="p">;</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="n">accessor</span><span class="p">.</span><span class="na">setExampleValue</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></code></pre></div></p>
+<h4 id="accessor">@Accessor<a class="headerlink" href="#accessor" title="Permanent link">&para;</a></h4>
+<p>フィールドの値を取得/設定できます。</p>
+<p><strong>ゲッター(取得)</strong></p>
+<p><code>型 メソッド名();</code>の形式で定義します</p>
+<p>メソッド名はなんでもいいですが、ゲッターメソッドの規則に従って<code>get&lt;FieldName&gt;</code>にしておきましょう。</p>
+<p><strong>セッター(設定)</strong></p>
+<p><code>void メソッド名(型);</code>の形式で定義します</p>
+<p>これも同様にメソッド名はセッターメソッドの規則に従って <code>set&lt;FieldName&gt;</code> にしておきましょう。</p>
+<div class="admonition warning メソッド名について">
+<p class="admonition-title">Warning</p>
+<p>対象のクラスに存在するメソッド名を使用してはいけません。</p>
+</div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:2">
+<p>FQCNは <code>パッケージ.クラス名</code> の形式でクラスを指定する。&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>コンパイラの副作用が動作に影響するため&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      MIT License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.select", "content.tooltips", "content.code.annotate", "navigation.instant"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
