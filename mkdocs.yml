@@ -83,6 +83,9 @@ plugins:
   - redirects:
       redirect_maps:
         'index.md': 'content/index.md'
+  - mkdocs-simple-hooks:
+      hooks:
+        on_pre_build: "hooks.gather:gather_md"
 
 hooks:
   - hooks/check.py
