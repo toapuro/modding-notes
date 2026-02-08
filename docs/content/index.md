@@ -1,15 +1,18 @@
 # Forge Modding Notes
 
-Minecraft Forge 1.20.1 のMod開発に関する情報をまとめたサイトです。
+このサイトでは、Minecraft Forge 1.20.1 のMod開発に関する情報をまとめています。
 
-このサイトは公式ドキュメントの補完を目的としています。
+また、このサイトは Forge / NeoForge の公式ドキュメントの補完を目的としたものです。そのため、基本的な内容については、以下の各公式ドキュメントを参照してください。
 
-基本的な内容については [NeoForge](https://docs.neoforged.net/docs/gettingstarted/) / [Forge](https://docs.minecraftforge.net/en/1.21.x/gettingstarted/) の公式ドキュメントを参照してください。
+- [Forge 公式ドキュメント バージョン1.20.x](https://docs.minecraftforge.net/en/1.20.x/)
+- [NeoForge 公式ドキュメント](https://docs.neoforged.net/docs/gettingstarted/)
 
-## フォーマット
+## プレースホルダー
 
-`<modid>`のように`<>`で囲まれた部分は適切なものに置き換えてください。
+このサイトに掲載しているソースコード例では、`<modid>`のように、`<`と`>`で囲まれた表記を使用することがあります。
+
+これらはプレースホルダーを表しています。実際に使用する場合は、自身のModに合わせてこれらプレースホルダーを適宜置き換えてください。
 
 ## 初心者の方へ
-[#環境構築](./getting-started/setup.md)
-から始めてみてください。
+
+Mod開発の経験が浅い初心者の場合は、[環境構築](./getting-started/setup.md)から始めてみましょう。
