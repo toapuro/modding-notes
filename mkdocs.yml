@@ -119,3 +119,6 @@ nav:
     - インジェクション: content/mixin/injections.md
     - MixinExtras: content/mixin/mixin-extras.md
     - トリック: content/mixin/tricks.md
+
+  - 編集:
+    - 編集方法: content/edit/index.md
