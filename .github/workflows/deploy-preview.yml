@@ -1,20 +1,14 @@
-name: Deploy
+name: Deploy to Cloudflare Pages
+
 on:
-  push:
-    branches:
-      - master 
-      - main
-permissions:
-  contents: write
+  workflow_dispatch:
+  pull_request_target:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Configure Git Credentials
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/checkout@v3
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
@@ -26,4 +20,10 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: pip install -r requirements.txt 
-      - run: mkdocs gh-deploy --force
+      - run: mkdocs build --strict
+      - uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: modding-notes
+          directory: ./site
