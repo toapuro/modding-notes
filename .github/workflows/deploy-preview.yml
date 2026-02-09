@@ -21,9 +21,10 @@ jobs:
             mkdocs-material-
       - run: pip install -r requirements.txt 
       - run: mkdocs build --strict
-      - uses: cloudflare/pages-action@v1
+      - name: Deploy pages preview
+        id: deploy-pages-preview
+        uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
+          apiToken: ${{ secrets.CF_API_KEY }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: modding-notes
-          directory: ./site
+          command: pages deploy ./site --project-name "modding-notes" --branch="${{ github.head_ref }}          
