@@ -1,5 +1,0 @@
-mkdocs
-mkdocs-material
-mkdocs-redirects
-mkdocs-simple-hooks
-pymdown-extensions
