@@ -26,5 +26,5 @@
 
 1. `docs/` の中にMarkdownファイルを作成
 2. `mkdocs.yml` の `nav` に追記
-3. `mkdocs serve` を実行して、ローカルで確認
+3. `uv run mkdocs serve` を実行して、ローカルで確認
 
