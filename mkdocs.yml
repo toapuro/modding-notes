@@ -97,6 +97,7 @@ nav:
     - 依存関係の追加: content/getting-started/dependency.md
     - Modファイル構造: content/getting-started/mod-files.md
     - Modクラス: content/getting-started/mod.md
+    - Git基礎: content/getting-started/git.md
 
   - 発展:
     - マッピング: content/advanced/mapping.md
