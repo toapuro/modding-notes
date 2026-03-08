@@ -81,6 +81,7 @@ dependencies {
   "minVersion": "0.8",
   "package": "<groupId>.mixin",
   "compatibilityLevel": "JAVA_17",
+  "refmap": "<modid>.refmap.json",
   "mixins": [],
   "client": [],
   "server": [],
