@@ -90,7 +90,13 @@ System.out.println(myInterface.example$getExampleValue());
 
 ### ソフトオーバーライド
 
-Mixinメソッドを継承して継承できるシステムを利用したものです。
+Mixinメソッドを継承できるシステムを利用したものです。
+
+インジェクションをオーバーライドし、特定のクラスでのインジェクションの動作を変更することができます。
+
+!!! info
+
+    対象のクラスに存在しないメソッドをオーバーライドしたい場合、競合の可能性が高くなるため、定義クラスのメソッドをソフトオーバーライドして実装することが推奨されています。
 
 詳しくは [Mixin Inheritance](https://wiki.fabricmc.net/tutorial:mixinheritance) を参照
 
