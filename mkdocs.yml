@@ -17,6 +17,7 @@ theme:
     - content.code.annotate
     
     - navigation.instant
+    - navigation.footer
     
   palette:
     - media: "(prefers-color-scheme)"
