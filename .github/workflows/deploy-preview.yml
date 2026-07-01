@@ -1,0 +1,30 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  workflow_dispatch:
+  pull_request_target:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: ~/.cache 
+          restore-keys: |
+            mkdocs-material-
+      - run: pip install -r requirements.txt 
+      - run: mkdocs build --strict
+      - name: Deploy pages preview
+        id: deploy-pages-preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_KEY }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy ./site --project-name "modding-notes" --branch="${{ github.head_ref }}"
