@@ -104,6 +104,9 @@ nav:
     - マッピング: content/advanced/mapping.md
     - Gradle: content/advanced/gradle.md
 
+  - ネットワーキング:
+    - 基本: content/networking/basic.md
+
   - レンダリング:
     - 基本: content/rendering/basic.md
     - 基本概念: content/rendering/api.md
