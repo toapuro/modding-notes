@@ -11,3 +11,6 @@ docs/all.txt
 *.swp
 *.swo
 .history/
+
+# AI Customization
+.agent/
